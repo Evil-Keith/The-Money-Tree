@@ -1,24 +1,24 @@
 let modInfo = {
-	name: "The ? Tree",
+	name: "The $ Tree",
 	author: "Evil-Keith",
-	pointsName: "?'s",
+	pointsName: "Cents",
 	modFiles: ["layers.js", "tree.js"],
 
-	discordName: "T?T Discord",
+	discordName: "T$T Discord",
 	discordLink: "https://discord.com/channels/1445630295440232490/1445630296073437407",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new Decimal (1), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1",
-	name: "Started Again",
+	num: "0.2",
+	name: "New Layers",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things that broke the last one.`
+	<h3>v0.2</h3><br>
+		- Added 4 Layers.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -41,8 +41,10 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(0)
-	if (hasUpgrade('a', 11)) gain = new Decimal(1)
-	if (hasUpgrade('a', 12)) gain = gain.times(2)
+	if (hasUpgrade('p', 11)) gain = new Decimal(1)
+	if (hasUpgrade('p', 12)) gain = gain.times(2)
+	if (hasUpgrade('d', 11)) gain = gain.times(2)
+	if (hasUpgrade('p', 14)) gain = gain.times(upgradeEffect('p', 14))
 	return gain
 }
 
@@ -52,13 +54,14 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
+	"Layer 1 Resets Money, Layer 2 Resets Layers 1 And Above, Layer 3 Resets All Above And So On",
 	"1-1 = Layer 1 Upgrade 1",
-	"Current Endgame: Upgrade 1-1"
+	"Current Endgame: Upgrade 4-1"
 ]
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return hasUpgrade('q', 11)
 }
 
 
