@@ -12,13 +12,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.2",
-	name: "New Layers",
+	num: "0.3",
+	name: "Bills",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.2</h3><br>
-		- Added 4 Layers.`
+		- Added Bill Layer.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -45,6 +45,8 @@ function getPointGen() {
 	if (hasUpgrade('p', 12)) gain = gain.times(2)
 	if (hasUpgrade('d', 11)) gain = gain.times(2)
 	if (hasUpgrade('p', 14)) gain = gain.times(upgradeEffect('p', 14))
+	if (hasUpgrade('n', 12)) gain = gain.times(2)
+	if (hasUpgrade('q', 12)) gain = gain.times(2)
 	return gain
 }
 
@@ -56,12 +58,12 @@ function addedPlayerData() { return {
 var displayThings = [
 	"Layer 1 Resets Money, Layer 2 Resets Layers 1 And Above, Layer 3 Resets All Above And So On",
 	"1-1 = Layer 1 Upgrade 1",
-	"Current Endgame: Upgrade 4-1"
+	"Current Endgame: 1's"
 ]
 
 // Determines when the game "ends"
 function isEndgame() {
-	return hasUpgrade('q', 11)
+	return hasUpgrade('q', 13)
 }
 
 

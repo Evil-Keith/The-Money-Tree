@@ -37,7 +37,7 @@ addLayer("p", {
         },
         12: {
             title: "Money Value Increases",
-            description: "Money's Doubled",
+            description: "Cents Gain Doubled",
             cost: new Decimal(3),
         },
         13: {
@@ -52,7 +52,7 @@ addLayer("p", {
             return player[this.layer].points.add(1).pow(0.5)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
-            cost: new Decimal(1000),
+            cost: new Decimal(10000),
             unlocked() { return hasMilestone('n', 0)},
         },
     },
@@ -95,9 +95,14 @@ addLayer("n", {
             cost: new Decimal(1),
         },
         12: {
+            title: "Why Not More Money?",
+            description: "Double Cent Gain",
+            cost: new Decimal(3),
+        },
+        13: {
             title: "More Coin Types",
             description: "Unlocks Dimes",
-            cost: new Decimal(2),
+            cost: new Decimal(5),
         },
     },
     milestones: {
@@ -137,18 +142,18 @@ addLayer("d", {
         return new Decimal(1)
     },
 
-    layerShown() {  return hasUpgrade('n', 12) || player.d.unlocked},          // Returns a bool for if this layer's node should be visible in the tree.
+    layerShown() {  return hasUpgrade('n', 13) || player.d.unlocked},          // Returns a bool for if this layer's node should be visible in the tree.
 
     upgrades: {
         11: {
             title: "Makes Cents",
-            description: "Double Cents Gain",
+            description: "Double Cents Gain Again (There Will Be One Of These At Every Layer)",
             cost: new Decimal(1),
         },
         12 : {
             title: "Even More Coins",
             description: "Unlock Quarters (The Cost Is 2.5 Dimes Which Make 25 Cents But Doesnt Make Sense Since You Cant Split A Coin And Spend It)",
-            cost: new Decimal(3),
+            cost: new Decimal(6),
         },
     },
 })
@@ -184,8 +189,52 @@ addLayer("q", {
     upgrades: {
         11: {
             title: "Doubles",
-            description: "Double Gain Of Everything Above Quarters",
+            description: "Double Gain Of Everything Above Quarters (Except Cent Gain Cause That Seems Like Cheating)",
             cost: new Decimal(3),
         },
+        12: {
+            title: "Bit Expensive(A Waiting Game)",
+            description: "Double Cent Gain Yet Again(Had To Make It Hard Somehow)",
+            cost: new Decimal(100000),
+        },
+        13: {
+            title: "Onto Bills",
+            description: "Hey You Made It, Unlocks Dollars",
+            cost: new Decimal(4),
+            unlocked() { return hasUpgrade('q', 12)},
+        },
+    },
+})
+
+addLayer("o", {
+    startData() { return {                  // startData is a function that returns default data for a layer. 
+        unlocked: false,                     // You can add more variables here to add them to your layer.
+        points: new Decimal(0),             // "points" is the internal name for the main resource of the layer.
+    }},
+
+    color: "#4BDC13",                       // The color for this layer, which affects many elements.
+    resource: "1's",            // The name of this layer's main prestige resource.
+    row: 4,                                 // The row this layer is on (0 is the first row).
+
+    baseResource: "Quarters",                 // The name of the resource your prestige gain is based on.
+    baseAmount() { return player.q.points },  // A function to return the current amount of baseResource.
+
+    requires: new Decimal(4),              // The amount of the base needed to  gain 1 of the prestige currency.
+                                            // Also the amount required to unlock the layer.
+
+    type: "normal",                         // Determines the formula used for calculating prestige currency.
+    exponent: 1,                          // "normal" prestige gain is (currency^exponent).
+
+    gainMult() {                            // Returns your multiplier to your gain of the prestige resource.
+        return new Decimal(1)               // Factor in any bonuses multiplying gain here.
+    },
+    gainExp() {                             // Returns the exponent to your gain of the prestige resource.
+        return new Decimal(1)
+    },
+
+    layerShown() {  return hasUpgrade('q', 13) || player.o.unlocked},          // Returns a bool for if this layer's node should be visible in the tree.
+
+    upgrades: {
+        // Look in the upgrades docs to see what goes here!
     },
 })
