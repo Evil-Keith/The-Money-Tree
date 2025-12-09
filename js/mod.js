@@ -1,24 +1,24 @@
 let modInfo = {
-	name: "The $ Tree",
+	name: "The Waiting Tree",
 	author: "Evil-Keith",
-	pointsName: "Cents",
+	pointsName: "Seconds",
 	modFiles: ["layers.js", "tree.js"],
 
-	discordName: "T$T Discord",
+	discordName: "TWT Discord",
 	discordLink: "https://discord.com/channels/1445630295440232490/1445630296073437407",
-	initialStartPoints: new Decimal (1), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.3",
-	name: "Bills",
+	num: "0.1",
+	name: "The Start",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.2</h3><br>
-		- Added Bill Layer.`
+		`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -40,13 +40,13 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(0)
-	if (hasUpgrade('p', 11)) gain = new Decimal(1)
-	if (hasUpgrade('p', 12)) gain = gain.times(2)
-	if (hasUpgrade('d', 11)) gain = gain.times(2)
-	if (hasUpgrade('p', 14)) gain = gain.times(upgradeEffect('p', 14))
-	if (hasUpgrade('n', 12)) gain = gain.times(2)
-	if (hasUpgrade('q', 12)) gain = gain.times(2)
+	let gain = new Decimal(1)
+	if (hasUpgrade('m',11)) gain = gain.times(2)
+	if (hasUpgrade('m',12)) gain = gain.times(4)
+	if (hasUpgrade('h',11)) gain = gain.times(2)
+	if (hasUpgrade('h',12)) gain = gain.times(4)
+	if (hasUpgrade('m', 13)) gain = gain.times(upgradeEffect('m', 13))
+	if (hasUpgrade('h', 13)) gain = gain.times(upgradeEffect('h', 13))
 	return gain
 }
 
@@ -56,14 +56,18 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	"Layer 1 Resets Money, Layer 2 Resets Layers 1 And Above, Layer 3 Resets All Above And So On",
+	"Layer 1 Resets Seconds, Layer 2 Resets Layers 1 And Above, Layer 3 Resets All Above And So On",
 	"1-1 = Layer 1 Upgrade 1",
-	"Current Endgame: 1's"
+	"Current Endgame: None",
+	"From Layer 3 And Down I was Too Lazy To Name Any Upgrades So They Are Upgrade I, Upgrade II Etc.",
+	"(They Will Be Changed Later)",
+	"For Upgrades That Unlock A New Layer, Dont Buy Them Twice Its Not Worth It"
+
 ]
 
 // Determines when the game "ends"
 function isEndgame() {
-	return hasUpgrade('q', 13)
+	return false
 }
 
 
